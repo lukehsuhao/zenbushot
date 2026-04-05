@@ -1,0 +1,109 @@
+/* Menu Items */
+"menu.area" = "Captura de Área";
+"menu.fullscreen" = "Captura de Pantalla Completa";
+"menu.window" = "Captura de Ventana";
+"menu.scrolling" = "Captura con Desplazamiento";
+"menu.freeze" = "Congelar Pantalla y Capturar";
+"menu.selftimer" = "Temporizador";
+"menu.seconds" = "%d segundos";
+"menu.ocr" = "Captura OCR";
+"menu.record.area" = "Grabar Área";
+"menu.record.fullscreen" = "Grabar Pantalla Completa";
+"menu.hide.desktop" = "Ocultar Iconos del Escritorio";
+"menu.preferences" = "Preferencias…";
+"menu.quit" = "Salir de AnyShot";
+
+/* Preview Buttons */
+"preview.copy" = "Copiar";
+"preview.save" = "Guardar";
+"preview.edit" = "Editar";
+"preview.ocr" = "OCR";
+"preview.pin" = "Fijar";
+
+/* Scrolling Capture */
+"scroll.start" = "Iniciar";
+"scroll.auto" = "Auto";
+"scroll.done" = "Listo";
+"scroll.frames" = "%d cuadros";
+
+/* Editor */
+"editor.title" = "Editar Captura";
+"editor.undo" = "Deshacer";
+"editor.redo" = "Rehacer";
+"editor.copy" = "Copiar";
+"editor.save" = "Guardar";
+
+/* Recording */
+"recording.pause" = "Pausar";
+"recording.resume" = "Reanudar";
+"recording.stop" = "Detener";
+"recording.saving" = "Guardando grabación…";
+"recording.converting.gif" = "Convirtiendo a GIF…";
+
+/* OCR */
+"ocr.copied" = "✓ Copiado (%d caracteres)";
+"ocr.title" = "Captura OCR";
+"ocr.notext" = "No se detectó texto.";
+"ocr.recognizing" = "Reconociendo texto…";
+
+/* Progress */
+"progress.stitching" = "Uniendo %d cuadros…";
+
+/* Preferences - Tabs */
+"prefs.general" = "General";
+"prefs.shortcuts" = "Atajos";
+"prefs.recording" = "Grabación";
+"prefs.editor" = "Editor";
+"prefs.about" = "Acerca de";
+
+/* Preferences - General */
+"prefs.capture" = "CAPTURA";
+"prefs.play.sound" = "Reproducir sonido al capturar";
+"prefs.copy.clipboard" = "Copiar al portapapeles al capturar";
+"prefs.auto.save" = "Guardar automáticamente al capturar";
+"prefs.show.preview" = "Mostrar vista previa flotante después de capturar";
+"prefs.save.location" = "Ubicación de guardado:";
+"prefs.browse" = "Explorar…";
+"prefs.dismiss.delay" = "Tiempo de cierre automático de vista previa:";
+
+/* Preferences - Recording */
+"prefs.audio" = "AUDIO";
+"prefs.record.audio" = "Grabar audio";
+"prefs.audio.device" = "Dispositivo de entrada de audio:";
+"prefs.system.default" = "Predeterminado del sistema (%@)";
+"prefs.mic.volume" = "Volumen del micrófono:";
+"prefs.video" = "VIDEO";
+"prefs.show.countdown" = "Mostrar cuenta regresiva 3-2-1 antes de grabar";
+
+/* Preferences - Editor */
+"prefs.annotation.color" = "Color de anotación predeterminado:";
+"prefs.stroke.width" = "Ancho de trazo predeterminado:";
+
+/* Preferences - About */
+"prefs.version" = "Versión 1.0";
+"prefs.description" = "Una potente herramienta de captura y anotación para macOS.";
+
+/* Alerts */
+"alert.ok" = "Aceptar";
+"alert.cancel" = "Cancelar";
+"alert.capture.error" = "Error de Captura";
+"alert.save.failed" = "Error al Guardar";
+"alert.save.failed.msg" = "No se pudo guardar el archivo: %@";
+"alert.recording.permission" = "Se Requiere Permiso de Grabación de Pantalla";
+"alert.recording.permission.msg" = "AnyShot necesita permiso para grabar la pantalla.\n\n1. Configuración del Sistema > Privacidad y Seguridad > Grabación de Pantalla\n2. Activar AnyShot\n3. Reiniciar AnyShot";
+"alert.recording.failed" = "Error de Grabación";
+"alert.recording.error" = "Error de Grabación";
+"alert.open.settings" = "Abrir Configuración del Sistema";
+"alert.later" = "Más tarde";
+"alert.no.previous" = "No hay área de captura anterior. Use primero la captura de área.";
+
+/* Pinned Window */
+"pin.title" = "Captura Fijada";
+"pin.copy" = "Copiar";
+"pin.save" = "Guardar…";
+"pin.close" = "Cerrar";
+
+/* Language */
+"prefs.language" = "Idioma:";
+"prefs.language.restart" = "Idioma cambiado. Reinicie AnyShot para aplicar.";
+"prefs.restart" = "Reiniciar Ahora";

@@ -1,0 +1,109 @@
+/* Menu Items */
+"menu.area" = "範囲スクリーンショット";
+"menu.fullscreen" = "フルスクリーンショット";
+"menu.window" = "ウィンドウスクリーンショット";
+"menu.scrolling" = "スクロールキャプチャ";
+"menu.freeze" = "画面固定キャプチャ";
+"menu.selftimer" = "セルフタイマー";
+"menu.seconds" = "%d 秒";
+"menu.ocr" = "OCR テキスト認識";
+"menu.record.area" = "範囲録画";
+"menu.record.fullscreen" = "フルスクリーン録画";
+"menu.hide.desktop" = "デスクトップアイコンを隠す";
+"menu.preferences" = "環境設定…";
+"menu.quit" = "AnyShot を終了";
+
+/* Preview Buttons */
+"preview.copy" = "コピー";
+"preview.save" = "保存";
+"preview.edit" = "編集";
+"preview.ocr" = "OCR";
+"preview.pin" = "ピン留め";
+
+/* Scrolling Capture */
+"scroll.start" = "開始";
+"scroll.auto" = "自動";
+"scroll.done" = "完了";
+"scroll.frames" = "%d フレーム";
+
+/* Editor */
+"editor.title" = "スクリーンショットを編集";
+"editor.undo" = "元に戻す";
+"editor.redo" = "やり直す";
+"editor.copy" = "コピー";
+"editor.save" = "保存";
+
+/* Recording */
+"recording.pause" = "一時停止";
+"recording.resume" = "再開";
+"recording.stop" = "停止";
+"recording.saving" = "録画を保存中…";
+"recording.converting.gif" = "GIF に変換中…";
+
+/* OCR */
+"ocr.copied" = "✓ コピー済み（%d 文字）";
+"ocr.title" = "OCR テキスト認識";
+"ocr.notext" = "テキストが検出されませんでした。";
+"ocr.recognizing" = "テキストを認識中…";
+
+/* Progress */
+"progress.stitching" = "%d フレームを結合中…";
+
+/* Preferences - Tabs */
+"prefs.general" = "一般";
+"prefs.shortcuts" = "ショートカット";
+"prefs.recording" = "録画";
+"prefs.editor" = "エディタ";
+"prefs.about" = "AnyShot について";
+
+/* Preferences - General */
+"prefs.capture" = "キャプチャ";
+"prefs.play.sound" = "キャプチャ時に音を鳴らす";
+"prefs.copy.clipboard" = "キャプチャ時にクリップボードにコピー";
+"prefs.auto.save" = "キャプチャ時に自動保存";
+"prefs.show.preview" = "キャプチャ後にフローティングプレビューを表示";
+"prefs.save.location" = "デフォルト保存先：";
+"prefs.browse" = "参照…";
+"prefs.dismiss.delay" = "プレビュー自動非表示までの時間：";
+
+/* Preferences - Recording */
+"prefs.audio" = "オーディオ";
+"prefs.record.audio" = "音声を録音";
+"prefs.audio.device" = "音声入力デバイス：";
+"prefs.system.default" = "システムデフォルト（%@）";
+"prefs.mic.volume" = "マイク音量：";
+"prefs.video" = "ビデオ";
+"prefs.show.countdown" = "録画前に 3-2-1 カウントダウンを表示";
+
+/* Preferences - Editor */
+"prefs.annotation.color" = "デフォルト注釈色：";
+"prefs.stroke.width" = "デフォルト線幅：";
+
+/* Preferences - About */
+"prefs.version" = "バージョン 1.0";
+"prefs.description" = "macOS 向けの高機能スクリーンショット・注釈ツール。";
+
+/* Alerts */
+"alert.ok" = "OK";
+"alert.cancel" = "キャンセル";
+"alert.capture.error" = "キャプチャエラー";
+"alert.save.failed" = "保存に失敗";
+"alert.save.failed.msg" = "ファイルを保存できませんでした：%@";
+"alert.recording.permission" = "画面収録の許可が必要です";
+"alert.recording.permission.msg" = "AnyShot は画面収録の許可が必要です。\n\n1. システム設定 > プライバシーとセキュリティ > 画面収録\n2. AnyShot を有効にする\n3. AnyShot を再起動";
+"alert.recording.failed" = "録画に失敗";
+"alert.recording.error" = "録画エラー";
+"alert.open.settings" = "システム設定を開く";
+"alert.later" = "後で";
+"alert.no.previous" = "前回のキャプチャ範囲がありません。先に範囲スクリーンショットを使用してください。";
+
+/* Pinned Window */
+"pin.title" = "ピン留めスクリーンショット";
+"pin.copy" = "コピー";
+"pin.save" = "保存…";
+"pin.close" = "閉じる";
+
+/* Language */
+"prefs.language" = "言語：";
+"prefs.language.restart" = "言語が変更されました。AnyShot を再起動して適用してください。";
+"prefs.restart" = "今すぐ再起動";

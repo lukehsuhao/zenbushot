@@ -1,0 +1,109 @@
+/* Menu Items */
+"menu.area" = "Area Screenshot";
+"menu.fullscreen" = "Fullscreen Screenshot";
+"menu.window" = "Window Screenshot";
+"menu.scrolling" = "Scrolling Capture";
+"menu.freeze" = "Freeze Screen & Capture";
+"menu.selftimer" = "Self-Timer";
+"menu.seconds" = "%d seconds";
+"menu.ocr" = "OCR Capture";
+"menu.record.area" = "Record Area";
+"menu.record.fullscreen" = "Record Fullscreen";
+"menu.hide.desktop" = "Hide Desktop Icons";
+"menu.preferences" = "Preferences...";
+"menu.quit" = "Quit AnyShot";
+
+/* Preview Buttons */
+"preview.copy" = "Copy";
+"preview.save" = "Save";
+"preview.edit" = "Edit";
+"preview.ocr" = "OCR";
+"preview.pin" = "Pin";
+
+/* Scrolling Capture */
+"scroll.start" = "Start";
+"scroll.auto" = "Auto";
+"scroll.done" = "Done";
+"scroll.frames" = "%d frames";
+
+/* Editor */
+"editor.title" = "Edit Screenshot";
+"editor.undo" = "Undo";
+"editor.redo" = "Redo";
+"editor.copy" = "Copy";
+"editor.save" = "Save";
+
+/* Recording */
+"recording.pause" = "Pause";
+"recording.resume" = "Resume";
+"recording.stop" = "Stop";
+"recording.saving" = "Saving recording...";
+"recording.converting.gif" = "Converting to GIF...";
+
+/* OCR */
+"ocr.copied" = "✓ Copied (%d chars)";
+"ocr.title" = "OCR Capture";
+"ocr.notext" = "No text detected.";
+"ocr.recognizing" = "Recognizing text...";
+
+/* Progress */
+"progress.stitching" = "Stitching %d frames...";
+
+/* Preferences - Tabs */
+"prefs.general" = "General";
+"prefs.shortcuts" = "Shortcuts";
+"prefs.recording" = "Recording";
+"prefs.editor" = "Editor";
+"prefs.about" = "About";
+
+/* Preferences - General */
+"prefs.capture" = "CAPTURE";
+"prefs.play.sound" = "Play sound on capture";
+"prefs.copy.clipboard" = "Copy to clipboard on capture";
+"prefs.auto.save" = "Auto-save screenshot to file";
+"prefs.show.preview" = "Show floating preview after capture";
+"prefs.save.location" = "Default save location:";
+"prefs.browse" = "Browse...";
+"prefs.dismiss.delay" = "Preview auto-dismiss delay:";
+
+/* Preferences - Recording */
+"prefs.audio" = "AUDIO";
+"prefs.record.audio" = "Record audio";
+"prefs.audio.device" = "Audio input device:";
+"prefs.system.default" = "System Default (%@)";
+"prefs.mic.volume" = "Mic Volume:";
+"prefs.video" = "VIDEO";
+"prefs.show.countdown" = "Show 3-2-1 countdown before recording";
+
+/* Preferences - Editor */
+"prefs.annotation.color" = "Default annotation color:";
+"prefs.stroke.width" = "Default stroke width:";
+
+/* Preferences - About */
+"prefs.version" = "Version 1.0";
+"prefs.description" = "A powerful screenshot and annotation tool for macOS.";
+
+/* Alerts */
+"alert.ok" = "OK";
+"alert.cancel" = "Cancel";
+"alert.capture.error" = "Capture Error";
+"alert.save.failed" = "Save Failed";
+"alert.save.failed.msg" = "Could not save the file: %@";
+"alert.recording.permission" = "Screen Recording Permission Required";
+"alert.recording.permission.msg" = "AnyShot needs screen recording permission.\n\n1. System Settings > Privacy & Security > Screen Recording\n2. Enable AnyShot\n3. Restart AnyShot";
+"alert.recording.failed" = "Recording Failed";
+"alert.recording.error" = "Recording Error";
+"alert.open.settings" = "Open System Settings";
+"alert.later" = "Later";
+"alert.no.previous" = "No previous capture area. Use Area Screenshot first.";
+
+/* Pinned Window */
+"pin.title" = "Pinned Screenshot";
+"pin.copy" = "Copy";
+"pin.save" = "Save...";
+"pin.close" = "Close";
+
+/* Language */
+"prefs.language" = "Language:";
+"prefs.language.restart" = "Language changed. Restart AnyShot to apply.";
+"prefs.restart" = "Restart Now";

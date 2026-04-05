@@ -1,0 +1,109 @@
+/* Menu Items */
+"menu.area" = "區域截圖";
+"menu.fullscreen" = "全螢幕截圖";
+"menu.window" = "視窗截圖";
+"menu.scrolling" = "捲動截圖";
+"menu.freeze" = "凍結畫面截圖";
+"menu.selftimer" = "定時拍攝";
+"menu.seconds" = "%d 秒";
+"menu.ocr" = "OCR 文字辨識";
+"menu.record.area" = "區域錄影";
+"menu.record.fullscreen" = "全螢幕錄影";
+"menu.hide.desktop" = "隱藏桌面圖示";
+"menu.preferences" = "偏好設定⋯";
+"menu.quit" = "結束 AnyShot";
+
+/* Preview Buttons */
+"preview.copy" = "複製";
+"preview.save" = "儲存";
+"preview.edit" = "編輯";
+"preview.ocr" = "OCR";
+"preview.pin" = "釘選";
+
+/* Scrolling Capture */
+"scroll.start" = "開始";
+"scroll.auto" = "自動";
+"scroll.done" = "完成";
+"scroll.frames" = "%d 幀";
+
+/* Editor */
+"editor.title" = "編輯截圖";
+"editor.undo" = "復原";
+"editor.redo" = "重做";
+"editor.copy" = "複製";
+"editor.save" = "儲存";
+
+/* Recording */
+"recording.pause" = "暫停";
+"recording.resume" = "繼續";
+"recording.stop" = "停止";
+"recording.saving" = "正在儲存錄影⋯";
+"recording.converting.gif" = "正在轉換為 GIF⋯";
+
+/* OCR */
+"ocr.copied" = "✓ 已複製（%d 字）";
+"ocr.title" = "OCR 文字辨識";
+"ocr.notext" = "未偵測到文字。";
+"ocr.recognizing" = "正在辨識文字⋯";
+
+/* Progress */
+"progress.stitching" = "正在拼接 %d 張圖片⋯";
+
+/* Preferences - Tabs */
+"prefs.general" = "一般";
+"prefs.shortcuts" = "快捷鍵";
+"prefs.recording" = "錄影";
+"prefs.editor" = "編輯器";
+"prefs.about" = "關於";
+
+/* Preferences - General */
+"prefs.capture" = "擷取";
+"prefs.play.sound" = "截圖時播放音效";
+"prefs.copy.clipboard" = "截圖時自動複製到剪貼簿";
+"prefs.auto.save" = "截圖時自動儲存檔案";
+"prefs.show.preview" = "截圖後顯示浮動預覽";
+"prefs.save.location" = "預設儲存位置：";
+"prefs.browse" = "瀏覽⋯";
+"prefs.dismiss.delay" = "預覽自動消失延遲：";
+
+/* Preferences - Recording */
+"prefs.audio" = "音訊";
+"prefs.record.audio" = "錄製音訊";
+"prefs.audio.device" = "音訊輸入裝置：";
+"prefs.system.default" = "系統預設（%@）";
+"prefs.mic.volume" = "麥克風音量：";
+"prefs.video" = "影片";
+"prefs.show.countdown" = "錄影前顯示 3-2-1 倒數";
+
+/* Preferences - Editor */
+"prefs.annotation.color" = "預設標註顏色：";
+"prefs.stroke.width" = "預設線條寬度：";
+
+/* Preferences - About */
+"prefs.version" = "版本 1.0";
+"prefs.description" = "功能強大的 macOS 截圖與標註工具。";
+
+/* Alerts */
+"alert.ok" = "確定";
+"alert.cancel" = "取消";
+"alert.capture.error" = "擷取錯誤";
+"alert.save.failed" = "儲存失敗";
+"alert.save.failed.msg" = "無法儲存檔案：%@";
+"alert.recording.permission" = "需要螢幕錄影權限";
+"alert.recording.permission.msg" = "AnyShot 需要螢幕錄影權限。\n\n1. 前往系統設定 > 隱私權與安全性 > 螢幕錄影\n2. 啟用 AnyShot\n3. 重新啟動 AnyShot";
+"alert.recording.failed" = "錄影失敗";
+"alert.recording.error" = "錄影錯誤";
+"alert.open.settings" = "打開系統設定";
+"alert.later" = "稍後";
+"alert.no.previous" = "沒有上次的截圖區域。請先使用區域截圖。";
+
+/* Pinned Window */
+"pin.title" = "釘選截圖";
+"pin.copy" = "複製";
+"pin.save" = "儲存⋯";
+"pin.close" = "關閉";
+
+/* Language */
+"prefs.language" = "語言：";
+"prefs.language.restart" = "語言已變更。請重新啟動 AnyShot 以套用。";
+"prefs.restart" = "立即重新啟動";

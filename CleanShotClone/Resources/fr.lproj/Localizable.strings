@@ -1,0 +1,109 @@
+/* Menu Items */
+"menu.area" = "Capture de Zone";
+"menu.fullscreen" = "Capture Plein Écran";
+"menu.window" = "Capture de Fenêtre";
+"menu.scrolling" = "Capture par Défilement";
+"menu.freeze" = "Figer l'Écran et Capturer";
+"menu.selftimer" = "Retardateur";
+"menu.seconds" = "%d secondes";
+"menu.ocr" = "Capture OCR";
+"menu.record.area" = "Enregistrer une Zone";
+"menu.record.fullscreen" = "Enregistrer Plein Écran";
+"menu.hide.desktop" = "Masquer les Icônes du Bureau";
+"menu.preferences" = "Préférences…";
+"menu.quit" = "Quitter AnyShot";
+
+/* Preview Buttons */
+"preview.copy" = "Copier";
+"preview.save" = "Enregistrer";
+"preview.edit" = "Modifier";
+"preview.ocr" = "OCR";
+"preview.pin" = "Épingler";
+
+/* Scrolling Capture */
+"scroll.start" = "Démarrer";
+"scroll.auto" = "Auto";
+"scroll.done" = "Terminé";
+"scroll.frames" = "%d images";
+
+/* Editor */
+"editor.title" = "Modifier la Capture";
+"editor.undo" = "Annuler";
+"editor.redo" = "Rétablir";
+"editor.copy" = "Copier";
+"editor.save" = "Enregistrer";
+
+/* Recording */
+"recording.pause" = "Pause";
+"recording.resume" = "Reprendre";
+"recording.stop" = "Arrêter";
+"recording.saving" = "Enregistrement en cours…";
+"recording.converting.gif" = "Conversion en GIF…";
+
+/* OCR */
+"ocr.copied" = "✓ Copié (%d caractères)";
+"ocr.title" = "Capture OCR";
+"ocr.notext" = "Aucun texte détecté.";
+"ocr.recognizing" = "Reconnaissance du texte…";
+
+/* Progress */
+"progress.stitching" = "Assemblage de %d images…";
+
+/* Preferences - Tabs */
+"prefs.general" = "Général";
+"prefs.shortcuts" = "Raccourcis";
+"prefs.recording" = "Enregistrement";
+"prefs.editor" = "Éditeur";
+"prefs.about" = "À propos";
+
+/* Preferences - General */
+"prefs.capture" = "CAPTURE";
+"prefs.play.sound" = "Jouer un son lors de la capture";
+"prefs.copy.clipboard" = "Copier dans le presse-papiers lors de la capture";
+"prefs.auto.save" = "Enregistrer automatiquement lors de la capture";
+"prefs.show.preview" = "Afficher l'aperçu flottant après la capture";
+"prefs.save.location" = "Emplacement de sauvegarde :";
+"prefs.browse" = "Parcourir…";
+"prefs.dismiss.delay" = "Délai de fermeture automatique de l'aperçu :";
+
+/* Preferences - Recording */
+"prefs.audio" = "AUDIO";
+"prefs.record.audio" = "Enregistrer l'audio";
+"prefs.audio.device" = "Périphérique d'entrée audio :";
+"prefs.system.default" = "Par défaut du système (%@)";
+"prefs.mic.volume" = "Volume du micro :";
+"prefs.video" = "VIDÉO";
+"prefs.show.countdown" = "Afficher le compte à rebours 3-2-1 avant l'enregistrement";
+
+/* Preferences - Editor */
+"prefs.annotation.color" = "Couleur d'annotation par défaut :";
+"prefs.stroke.width" = "Épaisseur de trait par défaut :";
+
+/* Preferences - About */
+"prefs.version" = "Version 1.0";
+"prefs.description" = "Un puissant outil de capture d'écran et d'annotation pour macOS.";
+
+/* Alerts */
+"alert.ok" = "OK";
+"alert.cancel" = "Annuler";
+"alert.capture.error" = "Erreur de Capture";
+"alert.save.failed" = "Échec de l'Enregistrement";
+"alert.save.failed.msg" = "Impossible d'enregistrer le fichier : %@";
+"alert.recording.permission" = "Autorisation d'Enregistrement d'Écran Requise";
+"alert.recording.permission.msg" = "AnyShot a besoin de l'autorisation d'enregistrement d'écran.\n\n1. Réglages Système > Confidentialité et Sécurité > Enregistrement d'écran\n2. Activer AnyShot\n3. Redémarrer AnyShot";
+"alert.recording.failed" = "Échec de l'Enregistrement";
+"alert.recording.error" = "Erreur d'Enregistrement";
+"alert.open.settings" = "Ouvrir les Réglages Système";
+"alert.later" = "Plus tard";
+"alert.no.previous" = "Aucune zone de capture précédente. Utilisez d'abord la capture de zone.";
+
+/* Pinned Window */
+"pin.title" = "Capture Épinglée";
+"pin.copy" = "Copier";
+"pin.save" = "Enregistrer…";
+"pin.close" = "Fermer";
+
+/* Language */
+"prefs.language" = "Langue :";
+"prefs.language.restart" = "Langue modifiée. Redémarrez AnyShot pour appliquer.";
+"prefs.restart" = "Redémarrer Maintenant";
