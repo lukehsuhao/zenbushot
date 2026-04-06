@@ -26,7 +26,7 @@ class SystemShortcutOverride {
             DispatchQueue.main.async {
                 let alert = NSAlert()
                 alert.messageText = "Restart Required"
-                alert.informativeText = "macOS screenshot shortcuts have been disabled in settings. Please log out and log back in (or restart) for this to take effect.\n\nAfter restarting, Cmd+Shift+3/4/5 will only trigger AnyShot."
+                alert.informativeText = "macOS screenshot shortcuts have been disabled in settings. Please log out and log back in (or restart) for this to take effect.\n\nAfter restarting, Cmd+Shift+3/4/5 will only trigger ZenbuShot."
                 alert.alertStyle = .informational
                 alert.addButton(withTitle: "OK")
                 alert.addButton(withTitle: "Log Out Now")

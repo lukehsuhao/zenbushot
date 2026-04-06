@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "Enregistrer Plein Écran";
 "menu.hide.desktop" = "Masquer les Icônes du Bureau";
 "menu.preferences" = "Préférences…";
-"menu.quit" = "Quitter AnyShot";
+"menu.quit" = "Quitter ZenbuShot";
 
 /* Preview Buttons */
 "preview.copy" = "Copier";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "Échec de l'Enregistrement";
 "alert.save.failed.msg" = "Impossible d'enregistrer le fichier : %@";
 "alert.recording.permission" = "Autorisation d'Enregistrement d'Écran Requise";
-"alert.recording.permission.msg" = "AnyShot a besoin de l'autorisation d'enregistrement d'écran.\n\n1. Réglages Système > Confidentialité et Sécurité > Enregistrement d'écran\n2. Activer AnyShot\n3. Redémarrer AnyShot";
+"alert.recording.permission.msg" = "ZenbuShot a besoin de l'autorisation d'enregistrement d'écran.\n\n1. Réglages Système > Confidentialité et Sécurité > Enregistrement d'écran\n2. Activer ZenbuShot\n3. Redémarrer ZenbuShot";
 "alert.recording.failed" = "Échec de l'Enregistrement";
 "alert.recording.error" = "Erreur d'Enregistrement";
 "alert.open.settings" = "Ouvrir les Réglages Système";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "Langue :";
-"prefs.language.restart" = "Langue modifiée. Redémarrez AnyShot pour appliquer.";
+"prefs.language.restart" = "Langue modifiée. Redémarrez ZenbuShot pour appliquer.";
 "prefs.restart" = "Redémarrer Maintenant";

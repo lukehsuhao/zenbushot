@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APP_NAME="AnyShot"
+APP_NAME="ZenbuShot"
 BUILD_DIR=".build/app"
 APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
 CONTENTS="$APP_BUNDLE/Contents"
@@ -66,13 +66,13 @@ cat > "$CONTENTS/Info.plist" << 'EOF'
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>AnyShot</string>
+    <string>ZenbuShot</string>
     <key>CFBundleIdentifier</key>
-    <string>com.local.anyshot</string>
+    <string>com.zenbu.zenbushot</string>
     <key>CFBundleName</key>
-    <string>AnyShot</string>
+    <string>ZenbuShot</string>
     <key>CFBundleDisplayName</key>
-    <string>AnyShot</string>
+    <string>ZenbuShot</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleVersion</key>
@@ -84,13 +84,13 @@ cat > "$CONTENTS/Info.plist" << 'EOF'
     <key>LSUIElement</key>
     <true/>
     <key>NSScreenCaptureUsageDescription</key>
-    <string>AnyShot needs screen recording permission to capture screenshots.</string>
+    <string>ZenbuShot needs screen recording permission to capture screenshots.</string>
     <key>NSAccessibilityUsageDescription</key>
-    <string>AnyShot needs accessibility permission for global keyboard shortcuts.</string>
+    <string>ZenbuShot needs accessibility permission for global keyboard shortcuts.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>AnyShot needs microphone access for screen recording with audio.</string>
+    <string>ZenbuShot needs microphone access for screen recording with audio.</string>
     <key>NSCameraUsageDescription</key>
-    <string>AnyShot needs camera access for webcam overlay during recordings.</string>
+    <string>ZenbuShot needs camera access for webcam overlay during recordings.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
 </dict>
@@ -100,13 +100,13 @@ EOF
 echo -n "APPL????" > "$CONTENTS/PkgInfo"
 
 # Sign with hardened runtime + entitlements (required for TCC microphone/camera access)
-ENTITLEMENTS="$(dirname "$0")/AnyShot.entitlements"
+ENTITLEMENTS="$(dirname "$0")/ZenbuShot.entitlements"
 echo "Signing with hardened runtime + entitlements..."
 codesign --force --deep --sign "36F0B6705A9F3FF9BA39E6AC4603258A7965EA02" \
     --options runtime \
     --entitlements "$ENTITLEMENTS" \
     "$APP_BUNDLE" 2>&1 || {
-    echo "Warning: AnyShot Developer signing failed, trying Developer ID..."
+    echo "Warning: ZenbuShot Developer signing failed, trying Developer ID..."
     codesign --force --deep --sign "Developer ID Application: Hao Hsu (V6ZDDG5Z68)" \
         --options runtime \
         --entitlements "$ENTITLEMENTS" \
@@ -121,36 +121,36 @@ codesign --force --deep --sign "36F0B6705A9F3FF9BA39E6AC4603258A7965EA02" \
 
 # Deploy to /Applications
 echo "Deploying to /Applications..."
-pkill -f "AnyShot" 2>/dev/null || true
+pkill -f "ZenbuShot" 2>/dev/null || true
 sleep 1
-rm -rf /Applications/AnyShot.app
-cp -R "$APP_BUNDLE" /Applications/AnyShot.app
+rm -rf /Applications/ZenbuShot.app
+cp -R "$APP_BUNDLE" /Applications/ZenbuShot.app
 # Verify deployment
-if [ "$(shasum "$APP_BUNDLE/Contents/MacOS/AnyShot" | cut -d' ' -f1)" = "$(shasum /Applications/AnyShot.app/Contents/MacOS/AnyShot | cut -d' ' -f1)" ]; then
+if [ "$(shasum "$APP_BUNDLE/Contents/MacOS/ZenbuShot" | cut -d' ' -f1)" = "$(shasum /Applications/ZenbuShot.app/Contents/MacOS/ZenbuShot | cut -d' ' -f1)" ]; then
     echo "Deploy verified OK"
 else
     echo "WARNING: Deploy mismatch, retrying..."
     sleep 1
-    rm -rf /Applications/AnyShot.app
-    cp -R "$APP_BUNDLE" /Applications/AnyShot.app
+    rm -rf /Applications/ZenbuShot.app
+    cp -R "$APP_BUNDLE" /Applications/ZenbuShot.app
 fi
 
-xattr -dr com.apple.quarantine /Applications/AnyShot.app 2>/dev/null || true
+xattr -dr com.apple.quarantine /Applications/ZenbuShot.app 2>/dev/null || true
 
 # Verify entitlements are embedded
 echo ""
 echo "Verifying entitlements..."
-codesign -d --entitlements - /Applications/AnyShot.app 2>&1 | grep -q "audio-input" && \
+codesign -d --entitlements - /Applications/ZenbuShot.app 2>&1 | grep -q "audio-input" && \
     echo "  ✓ audio-input entitlement present" || \
     echo "  ✗ WARNING: audio-input entitlement MISSING"
-codesign -d --entitlements - /Applications/AnyShot.app 2>&1 | grep -q "camera" && \
+codesign -d --entitlements - /Applications/ZenbuShot.app 2>&1 | grep -q "camera" && \
     echo "  ✓ camera entitlement present" || \
     echo "  ✗ WARNING: camera entitlement MISSING"
 
 # Reset TCC for fresh permission prompts (signature changed)
-tccutil reset Microphone com.local.anyshot 2>/dev/null || true
-tccutil reset Camera com.local.anyshot 2>/dev/null || true
+tccutil reset Microphone com.zenbu.zenbushot 2>/dev/null || true
+tccutil reset Camera com.zenbu.zenbushot 2>/dev/null || true
 
 echo ""
-echo "Build complete. Deployed to /Applications/AnyShot.app"
+echo "Build complete. Deployed to /Applications/ZenbuShot.app"
 echo "Run with: bash run.sh"

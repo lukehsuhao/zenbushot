@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "全螢幕錄影";
 "menu.hide.desktop" = "隱藏桌面圖示";
 "menu.preferences" = "偏好設定⋯";
-"menu.quit" = "結束 AnyShot";
+"menu.quit" = "結束 ZenbuShot";
 
 /* Preview Buttons */
 "preview.copy" = "複製";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "儲存失敗";
 "alert.save.failed.msg" = "無法儲存檔案：%@";
 "alert.recording.permission" = "需要螢幕錄影權限";
-"alert.recording.permission.msg" = "AnyShot 需要螢幕錄影權限。\n\n1. 前往系統設定 > 隱私權與安全性 > 螢幕錄影\n2. 啟用 AnyShot\n3. 重新啟動 AnyShot";
+"alert.recording.permission.msg" = "ZenbuShot 需要螢幕錄影權限。\n\n1. 前往系統設定 > 隱私權與安全性 > 螢幕錄影\n2. 啟用 ZenbuShot\n3. 重新啟動 ZenbuShot";
 "alert.recording.failed" = "錄影失敗";
 "alert.recording.error" = "錄影錯誤";
 "alert.open.settings" = "打開系統設定";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "語言：";
-"prefs.language.restart" = "語言已變更。請重新啟動 AnyShot 以套用。";
+"prefs.language.restart" = "語言已變更。請重新啟動 ZenbuShot 以套用。";
 "prefs.restart" = "立即重新啟動";

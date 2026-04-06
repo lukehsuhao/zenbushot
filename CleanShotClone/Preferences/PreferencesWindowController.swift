@@ -475,7 +475,7 @@ class PreferencesWindowController: NSWindowController {
         icon.contentTintColor = .controlAccentColor
         view.addSubview(icon)
 
-        let title = NSTextField(labelWithString: "AnyShot")
+        let title = NSTextField(labelWithString: "ZenbuShot")
         title.frame = CGRect(x: 0, y: 230, width: 476, height: 24)
         title.font = NSFont.systemFont(ofSize: 18, weight: .semibold)
         title.alignment = .center

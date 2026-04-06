@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "Record Fullscreen";
 "menu.hide.desktop" = "Hide Desktop Icons";
 "menu.preferences" = "Preferences...";
-"menu.quit" = "Quit AnyShot";
+"menu.quit" = "Quit ZenbuShot";
 
 /* Preview Buttons */
 "preview.copy" = "Copy";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "Save Failed";
 "alert.save.failed.msg" = "Could not save the file: %@";
 "alert.recording.permission" = "Screen Recording Permission Required";
-"alert.recording.permission.msg" = "AnyShot needs screen recording permission.\n\n1. System Settings > Privacy & Security > Screen Recording\n2. Enable AnyShot\n3. Restart AnyShot";
+"alert.recording.permission.msg" = "ZenbuShot needs screen recording permission.\n\n1. System Settings > Privacy & Security > Screen Recording\n2. Enable ZenbuShot\n3. Restart ZenbuShot";
 "alert.recording.failed" = "Recording Failed";
 "alert.recording.error" = "Recording Error";
 "alert.open.settings" = "Open System Settings";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "Language:";
-"prefs.language.restart" = "Language changed. Restart AnyShot to apply.";
+"prefs.language.restart" = "Language changed. Restart ZenbuShot to apply.";
 "prefs.restart" = "Restart Now";

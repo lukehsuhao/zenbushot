@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "Grabar Pantalla Completa";
 "menu.hide.desktop" = "Ocultar Iconos del Escritorio";
 "menu.preferences" = "Preferencias…";
-"menu.quit" = "Salir de AnyShot";
+"menu.quit" = "Salir de ZenbuShot";
 
 /* Preview Buttons */
 "preview.copy" = "Copiar";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "Error al Guardar";
 "alert.save.failed.msg" = "No se pudo guardar el archivo: %@";
 "alert.recording.permission" = "Se Requiere Permiso de Grabación de Pantalla";
-"alert.recording.permission.msg" = "AnyShot necesita permiso para grabar la pantalla.\n\n1. Configuración del Sistema > Privacidad y Seguridad > Grabación de Pantalla\n2. Activar AnyShot\n3. Reiniciar AnyShot";
+"alert.recording.permission.msg" = "ZenbuShot necesita permiso para grabar la pantalla.\n\n1. Configuración del Sistema > Privacidad y Seguridad > Grabación de Pantalla\n2. Activar ZenbuShot\n3. Reiniciar ZenbuShot";
 "alert.recording.failed" = "Error de Grabación";
 "alert.recording.error" = "Error de Grabación";
 "alert.open.settings" = "Abrir Configuración del Sistema";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "Idioma:";
-"prefs.language.restart" = "Idioma cambiado. Reinicie AnyShot para aplicar.";
+"prefs.language.restart" = "Idioma cambiado. Reinicie ZenbuShot para aplicar.";
 "prefs.restart" = "Reiniciar Ahora";

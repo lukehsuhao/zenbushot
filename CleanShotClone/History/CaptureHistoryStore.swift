@@ -18,7 +18,7 @@ class CaptureHistoryStore {
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        baseDir = appSupport.appendingPathComponent("AnyShot")
+        baseDir = appSupport.appendingPathComponent("ZenbuShot")
         capturesDir = baseDir.appendingPathComponent("captures")
         metadataURL = baseDir.appendingPathComponent("history.json")
 

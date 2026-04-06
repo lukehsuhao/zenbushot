@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "フルスクリーン録画";
 "menu.hide.desktop" = "デスクトップアイコンを隠す";
 "menu.preferences" = "環境設定…";
-"menu.quit" = "AnyShot を終了";
+"menu.quit" = "ZenbuShot を終了";
 
 /* Preview Buttons */
 "preview.copy" = "コピー";
@@ -54,7 +54,7 @@
 "prefs.shortcuts" = "ショートカット";
 "prefs.recording" = "録画";
 "prefs.editor" = "エディタ";
-"prefs.about" = "AnyShot について";
+"prefs.about" = "ZenbuShot について";
 
 /* Preferences - General */
 "prefs.capture" = "キャプチャ";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "保存に失敗";
 "alert.save.failed.msg" = "ファイルを保存できませんでした：%@";
 "alert.recording.permission" = "画面収録の許可が必要です";
-"alert.recording.permission.msg" = "AnyShot は画面収録の許可が必要です。\n\n1. システム設定 > プライバシーとセキュリティ > 画面収録\n2. AnyShot を有効にする\n3. AnyShot を再起動";
+"alert.recording.permission.msg" = "ZenbuShot は画面収録の許可が必要です。\n\n1. システム設定 > プライバシーとセキュリティ > 画面収録\n2. ZenbuShot を有効にする\n3. ZenbuShot を再起動";
 "alert.recording.failed" = "録画に失敗";
 "alert.recording.error" = "録画エラー";
 "alert.open.settings" = "システム設定を開く";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "言語：";
-"prefs.language.restart" = "言語が変更されました。AnyShot を再起動して適用してください。";
+"prefs.language.restart" = "言語が変更されました。ZenbuShot を再起動して適用してください。";
 "prefs.restart" = "今すぐ再起動";

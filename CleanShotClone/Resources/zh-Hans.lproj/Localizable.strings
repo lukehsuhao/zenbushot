@@ -11,7 +11,7 @@
 "menu.record.fullscreen" = "全屏录屏";
 "menu.hide.desktop" = "隐藏桌面图标";
 "menu.preferences" = "偏好设置…";
-"menu.quit" = "退出 AnyShot";
+"menu.quit" = "退出 ZenbuShot";
 
 /* Preview Buttons */
 "preview.copy" = "复制";
@@ -90,7 +90,7 @@
 "alert.save.failed" = "保存失败";
 "alert.save.failed.msg" = "无法保存文件：%@";
 "alert.recording.permission" = "需要屏幕录制权限";
-"alert.recording.permission.msg" = "AnyShot 需要屏幕录制权限。\n\n1. 前往系统设置 > 隐私与安全 > 屏幕录制\n2. 启用 AnyShot\n3. 重启 AnyShot";
+"alert.recording.permission.msg" = "ZenbuShot 需要屏幕录制权限。\n\n1. 前往系统设置 > 隐私与安全 > 屏幕录制\n2. 启用 ZenbuShot\n3. 重启 ZenbuShot";
 "alert.recording.failed" = "录屏失败";
 "alert.recording.error" = "录屏错误";
 "alert.open.settings" = "打开系统设置";
@@ -105,5 +105,5 @@
 
 /* Language */
 "prefs.language" = "语言：";
-"prefs.language.restart" = "语言已更改。请重启 AnyShot 以应用。";
+"prefs.language.restart" = "语言已更改。请重启 ZenbuShot 以应用。";
 "prefs.restart" = "立即重启";

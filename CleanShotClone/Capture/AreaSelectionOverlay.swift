@@ -85,7 +85,7 @@ class AreaSelectionOverlay: NSObject {
             self?.handleGlobalMouse(event)
         }
 
-        // Local mouse monitor (when AnyShot is active)
+        // Local mouse monitor (when ZenbuShot is active)
         localMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp, .mouseMoved]) { [weak self] event in
             self?.handleGlobalMouse(event)
             return event

@@ -159,7 +159,7 @@ class WindowPicker {
             let owner = info[kCGWindowOwnerName as String] as? String ?? ""
 
             // Skip our own windows
-            if owner == "AnyShot" { return nil }
+            if owner == "ZenbuShot" { return nil }
 
             return WindowInfo(
                 windowID: windowID,
