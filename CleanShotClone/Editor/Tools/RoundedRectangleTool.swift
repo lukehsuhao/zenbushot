@@ -1,16 +1,16 @@
 import AppKit
 
-class RectangleTool: Tool {
-    let toolType: ToolType = .rectangle
+class RoundedRectangleTool: Tool {
+    let toolType: ToolType = .roundedRect
     var color: NSColor = .systemRed
     var fillColor: NSColor = .clear
     var strokeWidth: CGFloat = 5
     private var startPoint: CGPoint?
-    private var currentAnnotation: RectangleAnnotation?
+    private var currentAnnotation: RoundedRectAnnotation?
 
     func mouseDown(at point: CGPoint, in canvas: CanvasView) {
         startPoint = point
-        let annotation = RectangleAnnotation(rect: CGRect(origin: point, size: .zero), color: color, fillColor: fillColor, strokeWidth: strokeWidth)
+        let annotation = RoundedRectAnnotation(rect: CGRect(origin: point, size: .zero), color: color, fillColor: fillColor, strokeWidth: strokeWidth)
         currentAnnotation = annotation
         canvas.addAnnotation(annotation)
     }
@@ -20,7 +20,6 @@ class RectangleTool: Tool {
         var w = abs(point.x - start.x)
         var h = abs(point.y - start.y)
 
-        // Shift or Command: constrain to square
         let flags = NSEvent.modifierFlags
         if flags.contains(.shift) || flags.contains(.command) {
             let side = max(w, h)

@@ -3,13 +3,14 @@ import AppKit
 class EllipseTool: Tool {
     let toolType: ToolType = .ellipse
     var color: NSColor = .systemRed
+    var fillColor: NSColor = .clear
     var strokeWidth: CGFloat = 5
     private var startPoint: CGPoint?
     private var currentAnnotation: EllipseAnnotation?
 
     func mouseDown(at point: CGPoint, in canvas: CanvasView) {
         startPoint = point
-        let annotation = EllipseAnnotation(rect: CGRect(origin: point, size: .zero), color: color, strokeWidth: strokeWidth)
+        let annotation = EllipseAnnotation(rect: CGRect(origin: point, size: .zero), color: color, fillColor: fillColor, strokeWidth: strokeWidth)
         currentAnnotation = annotation
         canvas.addAnnotation(annotation)
     }

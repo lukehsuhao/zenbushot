@@ -16,7 +16,7 @@ class FloatingPreviewWindow {
     private var timerStartDate: Date?
     private let result: CaptureResult
     private let actionHandler: (PreviewAction) -> Void
-    private let dismissDelay = Theme.Dimensions.previewDismissDelay
+    private let dismissDelay = UserSettings.shared.previewDismissDelay
 
     init(result: CaptureResult, actionHandler: @escaping (PreviewAction) -> Void) {
         self.result = result
@@ -156,82 +156,59 @@ class PreviewContentView: NSView, NSDraggingSource {
 
     private func setupUI() {
         wantsLayer = true
-        layer?.cornerRadius = Theme.Dimensions.previewCornerRadius
+        layer?.cornerRadius = 12
         layer?.masksToBounds = true
-        layer?.backgroundColor = Theme.Colors.surfacePrimary.cgColor
 
-        // Image view (fills most of the space)
-        let imageView = NSImageView(frame: NSRect(x: 6, y: 48, width: bounds.width - 12, height: bounds.height - 54))
+        // Image fills the entire preview with rounded corners
+        let imageView = NSImageView(frame: bounds)
         imageView.image = capturedImage
         imageView.imageScaling = .scaleProportionallyUpOrDown
         imageView.autoresizingMask = [.width, .height]
         imageView.wantsLayer = true
-        imageView.layer?.cornerRadius = 6
+        imageView.layer?.cornerRadius = 12
         imageView.layer?.masksToBounds = true
         addSubview(imageView)
 
-        // Button bar (hidden by default, revealed on hover)
-        buttonBar = NSView(frame: NSRect(x: 0, y: 0, width: bounds.width, height: 42))
-        buttonBar.wantsLayer = true
-        buttonBar.alphaValue = 0 // Hidden by default
-        buttonBar.autoresizingMask = [.width]
-
-        let buttons: [(String, String, PreviewAction)] = [
-            ("doc.on.clipboard", L("preview.copy"), .copy),
-            ("square.and.arrow.down.fill", L("preview.save"), .quickSave),
-            ("pencil.tip.crop.circle", L("preview.edit"), .edit),
-            ("text.viewfinder", L("preview.ocr"), .ocr),
-            ("pin.fill", L("preview.pin"), .pin),
-            ("xmark.circle", "", .close),
-        ]
-
-        let padding: CGFloat = 4
-        let btnW: CGFloat = (bounds.width - padding * 2) / CGFloat(buttons.count)
-        for (i, (icon, title, _)) in buttons.enumerated() {
-            let tintColor = i == buttons.count - 1
-                ? NSColor.secondaryLabelColor
-                : NSColor.labelColor
-
-            let container = NSView(frame: NSRect(x: padding + CGFloat(i) * btnW, y: 4, width: btnW, height: 34))
-
-            // Icon + label laid out as a centered pair
-            let iconSize: CGFloat = 14
-            let gap: CGFloat = title.isEmpty ? 0 : 3
-            let font = NSFont.systemFont(ofSize: 11, weight: .medium)
-            let textWidth = title.isEmpty ? 0 : (title as NSString).size(withAttributes: [.font: font]).width
-            let totalW = iconSize + gap + textWidth
-            let startX = (btnW - totalW) / 2
-
-            let iconView = NSImageView(frame: NSRect(x: startX, y: (34 - iconSize) / 2, width: iconSize, height: iconSize))
-            iconView.image = NSImage(systemSymbolName: icon, accessibilityDescription: title)
-            iconView.contentTintColor = tintColor
-            container.addSubview(iconView)
-
-            if !title.isEmpty {
-                let label = NSTextField(labelWithString: title)
-                label.font = font
-                label.textColor = tintColor
-                label.frame = NSRect(x: startX + iconSize + gap, y: (34 - 14) / 2, width: textWidth + 2, height: 14)
-                container.addSubview(label)
-            }
-
-            // Invisible button on top for click handling
-            let btn = NSButton(frame: NSRect(x: 0, y: 0, width: btnW, height: 34))
-            btn.isBordered = false
-            btn.isTransparent = true
-            btn.tag = i
-            btn.target = self
-            btn.action = #selector(buttonClicked(_:))
-            container.addSubview(btn)
-
-            buttonBar.addSubview(container)
-        }
-        addSubview(buttonBar)
-
-        // Progress bar at bottom
-        progressBar = ProgressBarView(frame: NSRect(x: 0, y: 42, width: bounds.width, height: 3))
+        // Progress bar — thin line at very bottom, inside rounded corners
+        progressBar = ProgressBarView(frame: NSRect(x: 0, y: 0, width: bounds.width, height: 3))
         progressBar.autoresizingMask = [.width]
         addSubview(progressBar)
+
+        // Circular buttons scattered around edges (hidden by default, shown on hover)
+        buttonBar = NSView(frame: bounds)
+        buttonBar.wantsLayer = true
+        buttonBar.alphaValue = 0
+        buttonBar.autoresizingMask = [.width, .height]
+
+        let cs: CGFloat = 34  // circle size
+        let ic: CGFloat = 17  // icon size
+        let m: CGFloat = 8    // margin from edge
+        let g: CGFloat = 4    // gap between stacked buttons
+        let w = bounds.width
+        let h = bounds.height
+
+        // Layout: buttons at corners/edges
+        // tag maps to: 0=copy, 1=quickSave, 2=edit, 3=ocr, 4=pin, 5=close
+        // side: true=left, false=right (determines label position)
+        let positions: [(icon: String, label: String, x: CGFloat, y: CGFloat, tag: Int, leftSide: Bool)] = [
+            ("xmark",                      L("pin.close"),    m,            h - m - cs,                5, true),
+            ("pin.fill",                   L("preview.pin"),  m,            h - m - cs - (cs + g),     4, true),
+            ("text.viewfinder",            L("preview.ocr"),  m,            m,                          3, true),
+            ("doc.on.clipboard",           L("preview.copy"), w - m - cs,   h - m - cs,                0, false),
+            ("square.and.arrow.down.fill", L("preview.save"), w - m - cs,   h - m - cs - (cs + g),     1, false),
+            ("square.and.pencil",          L("preview.edit"), w - m - cs,   m,                          2, false),
+        ]
+
+        for (icon, label, x, y, tag, leftSide) in positions {
+            let circleBtn = PreviewCircleButton(
+                frame: NSRect(x: x, y: y, width: cs, height: cs),
+                icon: icon, label: label, iconSize: ic, leftSide: leftSide,
+                tag: tag, target: self, action: #selector(buttonClicked(_:)),
+                parentView: buttonBar
+            )
+            buttonBar.addSubview(circleBtn)
+        }
+        addSubview(buttonBar)
 
         // Start progress animation
         progressTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
@@ -270,8 +247,8 @@ class PreviewContentView: NSView, NSDraggingSource {
 
     override func mouseDown(with event: NSEvent) {
         let location = convert(event.locationInWindow, from: nil)
-        // Only start drag from the image area (above button bar)
-        if location.y > 48 {
+        // Only start drag from the image area (above the overlay bar)
+        if location.y > 40 {
             let draggingItem = NSDraggingItem(pasteboardWriter: capturedImage)
             draggingItem.setDraggingFrame(bounds, contents: capturedImage)
             beginDraggingSession(with: [draggingItem], event: event, source: self)
@@ -291,6 +268,88 @@ class PreviewContentView: NSView, NSDraggingSource {
 
     deinit {
         progressTimer?.invalidate()
+    }
+}
+
+// MARK: - Circle Button with hover label
+
+class PreviewCircleButton: NSView {
+    weak var labelView: NSTextField?
+    private var isButtonHovered = false
+
+    init(frame: NSRect, icon: String, label: String, iconSize: CGFloat, leftSide: Bool,
+         tag: Int, target: AnyObject, action: Selector, parentView: NSView) {
+        super.init(frame: frame)
+
+        wantsLayer = true
+        layer?.cornerRadius = frame.width / 2
+        layer?.backgroundColor = NSColor(white: 0.85, alpha: 0.9).cgColor
+
+        let pad = (frame.width - iconSize) / 2
+        let iconView = NSImageView(frame: NSRect(x: pad, y: pad, width: iconSize, height: iconSize))
+        iconView.image = NSImage(systemSymbolName: icon, accessibilityDescription: label)
+        iconView.contentTintColor = NSColor(white: 0.25, alpha: 1.0)
+        addSubview(iconView)
+
+        let btn = NSButton(frame: bounds)
+        btn.isBordered = false
+        btn.isTransparent = true
+        btn.tag = tag
+        btn.target = target
+        btn.action = action
+        addSubview(btn)
+
+        // Label added to parent (not self) so it's not clipped
+        let font = NSFont.systemFont(ofSize: 11, weight: .medium)
+        let textWidth = (label as NSString).size(withAttributes: [.font: font]).width + 14
+        let labelHeight: CGFloat = 20
+        let labelX: CGFloat = leftSide ? frame.origin.x + frame.width + 6 : frame.origin.x - textWidth - 6
+        let labelY: CGFloat = frame.origin.y + (frame.height - labelHeight) / 2
+
+        let lbl = NSTextField(labelWithString: label)
+        lbl.font = font
+        lbl.textColor = .white
+        lbl.backgroundColor = NSColor(white: 0.1, alpha: 0.85)
+        lbl.isBezeled = false
+        lbl.drawsBackground = true
+        lbl.wantsLayer = true
+        lbl.layer?.cornerRadius = 5
+        lbl.alignment = .center
+        lbl.frame = NSRect(x: labelX, y: labelY, width: textWidth, height: labelHeight)
+        lbl.alphaValue = 0
+        parentView.addSubview(lbl)
+        self.labelView = lbl
+
+        // Tracking area
+        addTrackingArea(NSTrackingArea(
+            rect: bounds,
+            options: [.mouseEnteredAndExited, .activeAlways],
+            owner: self, userInfo: nil
+        ))
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    override func mouseEntered(with event: NSEvent) {
+        isButtonHovered = true
+        NSCursor.pointingHand.push()
+        NSAnimationContext.runAnimationGroup { ctx in
+            ctx.duration = 0.15
+            labelView?.animator().alphaValue = 1
+        }
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        isButtonHovered = false
+        NSCursor.pop()
+        NSAnimationContext.runAnimationGroup { ctx in
+            ctx.duration = 0.15
+            labelView?.animator().alphaValue = 0
+        }
+    }
+
+    override func resetCursorRects() {
+        addCursorRect(bounds, cursor: .pointingHand)
     }
 }
 

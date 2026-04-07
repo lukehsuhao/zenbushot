@@ -53,9 +53,11 @@ class EditorWindowController: NSWindowController {
 
     private func setupTools() {
         tools[.selection] = SelectionTool()
+        tools[.hand] = HandTool()
         tools[.arrow] = ArrowTool()
         tools[.line] = LineTool()
         tools[.rectangle] = RectangleTool()
+        tools[.roundedRect] = RoundedRectangleTool()
         tools[.ellipse] = EllipseTool()
         tools[.freehand] = FreehandTool()
         tools[.text] = TextTool()
@@ -136,7 +138,51 @@ class EditorWindowController: NSWindowController {
         copyBtn.autoresizingMask = [.minXMargin]
         bottomBar.addSubview(copyBtn)
 
+        // Center: Zoom controls
+        let zoomOut = NSButton(frame: CGRect(x: 0, y: 8, width: 28, height: 28))
+        zoomOut.image = NSImage(systemSymbolName: "minus.magnifyingglass", accessibilityDescription: "Zoom Out")
+        zoomOut.isBordered = false
+        zoomOut.target = self
+        zoomOut.action = #selector(zoomOutAction)
+        bottomBar.addSubview(zoomOut)
+
+        let zoomLabel = NSTextField(labelWithString: "100%")
+        zoomLabel.frame = CGRect(x: 0, y: 12, width: 50, height: 18)
+        zoomLabel.font = NSFont.monospacedDigitSystemFont(ofSize: 11, weight: .medium)
+        zoomLabel.alignment = .center
+        zoomLabel.tag = 300
+        bottomBar.addSubview(zoomLabel)
+
+        let zoomIn = NSButton(frame: CGRect(x: 0, y: 8, width: 28, height: 28))
+        zoomIn.image = NSImage(systemSymbolName: "plus.magnifyingglass", accessibilityDescription: "Zoom In")
+        zoomIn.isBordered = false
+        zoomIn.target = self
+        zoomIn.action = #selector(zoomInAction)
+        bottomBar.addSubview(zoomIn)
+
+        let zoomFit = NSButton(frame: CGRect(x: 0, y: 8, width: 28, height: 28))
+        zoomFit.image = NSImage(systemSymbolName: "arrow.up.left.and.arrow.down.right", accessibilityDescription: "Fit")
+        zoomFit.isBordered = false
+        zoomFit.target = self
+        zoomFit.action = #selector(zoomFitAction)
+        bottomBar.addSubview(zoomFit)
+
+        // Position zoom controls centered
+        let zoomTotalW: CGFloat = 28 + 50 + 28 + 28 + 8
+        let zoomStartX = (contentView.bounds.width - zoomTotalW) / 2
+        zoomOut.frame.origin.x = zoomStartX
+        zoomLabel.frame.origin.x = zoomStartX + 28
+        zoomIn.frame.origin.x = zoomStartX + 28 + 50
+        zoomFit.frame.origin.x = zoomStartX + 28 + 50 + 28 + 4
+
         contentView.addSubview(bottomBar)
+
+        // Listen for zoom changes
+        canvasView.onZoomChanged = { [weak self] level in
+            if let label = self?.window?.contentView?.viewWithTag(300) as? NSTextField {
+                label.stringValue = "\(Int(level * 100))%"
+            }
+        }
     }
 
     private func createBottomButton(title: String, key: String, modifiers: NSEvent.ModifierFlags, action: Selector) -> NSButton {
@@ -177,6 +223,10 @@ class EditorWindowController: NSWindowController {
         window?.close()
     }
 
+    @objc private func zoomInAction() { canvasView.zoomIn() }
+    @objc private func zoomOutAction() { canvasView.zoomOut() }
+    @objc private func zoomFitAction() { canvasView.zoomToFit() }
+
     @objc private func saveImage() {
         FileExportService.saveImage(canvasView.flattenedImage())
     }
@@ -204,11 +254,37 @@ extension EditorWindowController: EditorToolbarDelegate {
     func toolbarDidChangeColor(_ color: NSColor) {
         currentColor = color
         updateToolColor()
+
+        // Update selected annotation's border color
+        if let selected = canvasView.selectionState.selectedAnnotation {
+            selected.color = color
+            canvasView.needsDisplay = true
+        }
+    }
+
+    func toolbarDidChangeFillColor(_ color: NSColor) {
+        if let tool = tools[.rectangle] as? RectangleTool { tool.fillColor = color }
+        if let tool = tools[.roundedRect] as? RoundedRectangleTool { tool.fillColor = color }
+        if let tool = tools[.ellipse] as? EllipseTool { tool.fillColor = color }
+
+        // Update selected annotation's fill color
+        if let selected = canvasView.selectionState.selectedAnnotation {
+            if let rect = selected as? RectangleAnnotation { rect.fillColor = color }
+            else if let rr = selected as? RoundedRectAnnotation { rr.fillColor = color }
+            else if let ell = selected as? EllipseAnnotation { ell.fillColor = color }
+            canvasView.needsDisplay = true
+        }
     }
 
     func toolbarDidChangeStrokeWidth(_ width: CGFloat) {
         currentStrokeWidth = width
         updateToolColor()
+
+        // Update selected annotation's stroke width
+        if let selected = canvasView.selectionState.selectedAnnotation {
+            selected.strokeWidth = width
+            canvasView.needsDisplay = true
+        }
     }
 }
 

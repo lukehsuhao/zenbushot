@@ -1,11 +1,12 @@
 import AppKit
 
-class EllipseAnnotation: Annotation {
+class RoundedRectAnnotation: Annotation {
     let id = UUID()
     var boundingRect: CGRect
     var color: NSColor       // border color
     var fillColor: NSColor   // fill color (.clear = no fill)
     var strokeWidth: CGFloat
+    var cornerRadius: CGFloat = 12
 
     init(rect: CGRect, color: NSColor = .systemRed, fillColor: NSColor = .clear, strokeWidth: CGFloat = 3) {
         self.boundingRect = rect
@@ -14,30 +15,29 @@ class EllipseAnnotation: Annotation {
         self.strokeWidth = strokeWidth
     }
 
-    // Legacy support
-    var isFilled: Bool { fillColor != .clear }
-
     func render(in context: CGContext, canvasSize: CGSize) {
+        guard boundingRect.width > 0, boundingRect.height > 0 else { return }
+        let path = CGPath(roundedRect: boundingRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
+
         if fillColor != .clear {
+            context.addPath(path)
             context.setFillColor(fillColor.cgColor)
-            context.fillEllipse(in: boundingRect)
+            context.fillPath()
         }
+
+        context.addPath(path)
         context.setStrokeColor(color.cgColor)
         context.setLineWidth(strokeWidth)
-        context.strokeEllipse(in: boundingRect)
+        context.strokePath()
     }
 
     func hitTest(_ point: CGPoint) -> Bool {
-        let a = boundingRect.width / 2
-        let b = boundingRect.height / 2
-        let cx = boundingRect.midX
-        let cy = boundingRect.midY
-        let dx = point.x - cx
-        let dy = point.y - cy
-        let dist = (dx * dx) / (a * a) + (dy * dy) / (b * b)
-        if fillColor != .clear { return dist <= 1.0 }
-        return abs(dist - 1.0) < 0.3
+        boundingRect.insetBy(dx: -strokeWidth, dy: -strokeWidth).contains(point)
     }
 
-    func copy() -> Annotation { EllipseAnnotation(rect: boundingRect, color: color, fillColor: fillColor, strokeWidth: strokeWidth) }
+    func copy() -> Annotation {
+        let ann = RoundedRectAnnotation(rect: boundingRect, color: color, fillColor: fillColor, strokeWidth: strokeWidth)
+        ann.cornerRadius = cornerRadius
+        return ann
+    }
 }

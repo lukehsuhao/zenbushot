@@ -115,7 +115,12 @@ class ScrollCaptureStitcher {
         let colEnd = w * 90 / 100
         let colStep = max(1, (colEnd - colStart) / 50)
 
+        // Don't break on first mismatch — allow gaps (e.g., transparent header with animation behind it)
+        // Instead, find the longest continuous matching streak from the top
         var headerHeight = 0
+        var mismatchCount = 0
+        let maxGap = 5  // allow up to 5 non-matching rows
+
         for row in 0..<maxCheck {
             var matches = 0, total = 0
             for col in stride(from: colStart, to: colEnd, by: colStep) {
@@ -128,8 +133,10 @@ class ScrollCaptureStitcher {
             }
             if total > 0 && matches * 100 / total >= 95 {
                 headerHeight = row + 1
+                mismatchCount = 0
             } else {
-                break
+                mismatchCount += 1
+                if mismatchCount > maxGap { break }
             }
         }
         return headerHeight < 20 ? 0 : headerHeight
@@ -185,55 +192,58 @@ class ScrollCaptureStitcher {
         let maxOverlap = contentH * 90 / 100
         let minOverlap = max(contentH / 20, 10)
 
-        // Strategy: pick an "anchor row" near the bottom of A that has non-trivial content,
-        // then search for it in B's content area. Once found, verify the full overlap.
-
-        // Find a good anchor row (non-trivial, near bottom of A)
-        var anchorRowA = -1
-        for candidate in stride(from: h - 5, through: h - contentH / 2, by: -3) {
+        // Strategy 1: Try multiple anchor rows from different parts of A's bottom half
+        var anchorCandidates: [Int] = []
+        for candidate in stride(from: h - 5, through: h / 2, by: -7) {
             if candidate >= 0 && !rowIsTrivial(buf: a, row: candidate, sampleCols: sampleCols) {
-                anchorRowA = candidate
-                break
+                anchorCandidates.append(candidate)
+                if anchorCandidates.count >= 8 { break }
             }
         }
 
-        // If no non-trivial row near bottom, try from further up
-        if anchorRowA < 0 {
-            for candidate in stride(from: h - contentH / 2, through: headerHeight, by: -3) {
-                if !rowIsTrivial(buf: a, row: candidate, sampleCols: sampleCols) {
-                    anchorRowA = candidate
-                    break
-                }
-            }
-        }
-
-        // Fallback: just use a row near the middle-bottom
-        if anchorRowA < 0 {
-            anchorRowA = h - contentH / 4
-        }
-
-        // Search for anchorRowA's content in B (below header)
         let bContentStart = headerHeight
         let bContentEnd = b.height
 
-        for rowB in bContentStart..<bContentEnd {
-            if rowMatches(a: a, rowA: anchorRowA, b: b, rowB: rowB, sampleCols: sampleCols) {
-                // Found a candidate match. Calculate the implied overlap.
-                // anchorRowA is at position (anchorRowA) from top of A
-                // The bottom of A starts at row (h - overlap) when mapped to B's content at row bContentStart
-                // So: anchorRowA - (h - overlap) = rowB - bContentStart
-                // => overlap = h - anchorRowA + rowB - bContentStart
-                let contentOverlap = h - anchorRowA + (rowB - bContentStart)
-                let totalOverlap = headerHeight + contentOverlap
+        for anchorRowA in anchorCandidates {
+            for rowB in bContentStart..<bContentEnd {
+                if rowMatches(a: a, rowA: anchorRowA, b: b, rowB: rowB, sampleCols: sampleCols) {
+                    let contentOverlap = h - anchorRowA + (rowB - bContentStart)
+                    let totalOverlap = headerHeight + contentOverlap
 
-                guard contentOverlap >= minOverlap && contentOverlap <= maxOverlap else { continue }
+                    guard contentOverlap >= minOverlap && contentOverlap <= maxOverlap else { continue }
 
-                // Verify: check multiple rows across the overlap zone
-                let verified = verifyOverlap(a: a, b: b, contentOverlap: contentOverlap,
-                                              headerHeight: headerHeight, sampleCols: sampleCols)
-                if verified {
-                    return totalOverlap
+                    let verified = verifyOverlap(a: a, b: b, contentOverlap: contentOverlap,
+                                                  headerHeight: headerHeight, sampleCols: sampleCols)
+                    if verified {
+                        return totalOverlap
+                    }
                 }
+            }
+        }
+
+        // Strategy 2: Brute force — scan every Nth row of A's bottom half against B
+        // This catches cases where animation changes most of the frame but some rows still match
+        NSLog("[Stitcher] anchor search failed, trying brute force scan")
+        for overlapCandidate in stride(from: maxOverlap, through: minOverlap, by: -4) {
+            var matchingRows = 0
+            var checkedRows = 0
+            let rowStep = max(1, overlapCandidate / 20)
+
+            for i in stride(from: 0, to: overlapCandidate, by: rowStep) {
+                let rowA = h - overlapCandidate + i
+                let rowB = headerHeight + i
+                guard rowA >= 0 && rowA < h && rowB >= 0 && rowB < b.height else { continue }
+
+                if rowIsTrivial(buf: a, row: rowA, sampleCols: sampleCols) { continue }
+                checkedRows += 1
+                if rowMatches(a: a, rowA: rowA, b: b, rowB: rowB, sampleCols: sampleCols) {
+                    matchingRows += 1
+                }
+            }
+
+            if checkedRows >= 3 && matchingRows * 100 / checkedRows >= 60 {
+                let totalOverlap = headerHeight + overlapCandidate
+                return totalOverlap
             }
         }
 
@@ -265,8 +275,8 @@ class ScrollCaptureStitcher {
             }
         }
 
-        // Need at least 5 non-trivial rows checked, and >= 70% match
-        return checkedRows >= 5 && goodRows * 100 / checkedRows >= 70
+        // Need at least 3 non-trivial rows checked, and >= 60% match
+        return checkedRows >= 3 && goodRows * 100 / checkedRows >= 60
     }
 
     // MARK: - Render

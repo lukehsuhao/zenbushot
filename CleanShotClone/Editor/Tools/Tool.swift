@@ -2,9 +2,11 @@ import AppKit
 
 enum ToolType: String, CaseIterable {
     case selection = "Select"
+    case hand = "Hand"
     case arrow = "Arrow"
     case line = "Line"
     case rectangle = "Rectangle"
+    case roundedRect = "Rounded Rect"
     case ellipse = "Ellipse"
     case freehand = "Pencil"
     case text = "Text"
@@ -17,9 +19,11 @@ enum ToolType: String, CaseIterable {
     var icon: String {
         switch self {
         case .selection: return "cursorarrow"
+        case .hand: return "hand.raised"
         case .arrow: return "arrow.up.right"
         case .line: return "line.diagonal"
         case .rectangle: return "rectangle"
+        case .roundedRect: return "app"
         case .ellipse: return "circle"
         case .freehand: return "pencil.tip"
         case .text: return "textformat"

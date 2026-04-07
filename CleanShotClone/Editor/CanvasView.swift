@@ -7,6 +7,9 @@ class CanvasView: NSView, NSTextFieldDelegate {
     weak var canvasDelegate: CanvasViewDelegate?
     private var hoveredAnnotation: Annotation?
     private var mouseTrackingArea: NSTrackingArea?
+    private var originalSize: CGSize = .zero
+    private(set) var zoomLevel: CGFloat = 1.0
+    var onZoomChanged: ((CGFloat) -> Void)?
 
     var currentTool: Tool? {
         didSet { resetCursorRects() }
@@ -14,6 +17,7 @@ class CanvasView: NSView, NSTextFieldDelegate {
 
     init(frame: NSRect, image: NSImage) {
         self.baseImage = image
+        self.originalSize = frame.size
         super.init(frame: frame)
         wantsLayer = true
         setupMouseTracking()
@@ -46,7 +50,7 @@ class CanvasView: NSView, NSTextFieldDelegate {
         // Blur/Mosaic (reads base image)
         for ann in annotations {
             if let blur = ann as? BlurAnnotation { blur.renderBlur(baseImage: baseImage, in: context) }
-            else if let mosaic = ann as? MosaicAnnotation { mosaic.renderMosaic(baseImage: baseImage, in: context) }
+            else if let mosaic = ann as? MosaicAnnotation { mosaic.renderMosaic(baseImage: baseImage, in: context, canvasSize: bounds.size) }
         }
 
         // Spotlight (full-canvas effect)
@@ -173,6 +177,71 @@ class CanvasView: NSView, NSTextFieldDelegate {
 
     override var acceptsFirstResponder: Bool { true }
 
+    // MARK: - Zoom
+
+    func setZoom(_ level: CGFloat) {
+        zoomLevel = min(max(level, 0.25), 5.0)
+        let newSize = CGSize(width: originalSize.width * zoomLevel, height: originalSize.height * zoomLevel)
+        setFrameSize(newSize)
+        needsDisplay = true
+        onZoomChanged?(zoomLevel)
+    }
+
+    /// Zoom centered on a specific point in the canvas
+    func setZoom(_ level: CGFloat, centeredOn point: CGPoint) {
+        guard let scrollView = enclosingScrollView else {
+            setZoom(level)
+            return
+        }
+
+        let oldZoom = zoomLevel
+        let newZoom = min(max(level, 0.25), 5.0)
+        guard newZoom != oldZoom else { return }
+
+        // Point in canvas coordinates before zoom
+        let visibleRect = scrollView.contentView.bounds
+
+        // Where the mouse is relative to the visible area
+        let mouseInVisible = CGPoint(
+            x: point.x - visibleRect.origin.x,
+            y: point.y - visibleRect.origin.y
+        )
+
+        // Apply zoom
+        zoomLevel = newZoom
+        let newSize = CGSize(width: originalSize.width * zoomLevel, height: originalSize.height * zoomLevel)
+        setFrameSize(newSize)
+        needsDisplay = true
+        onZoomChanged?(zoomLevel)
+
+        // Calculate new scroll position to keep mouse point stable
+        let scale = newZoom / oldZoom
+        let newOrigin = CGPoint(
+            x: point.x * scale - mouseInVisible.x,
+            y: point.y * scale - mouseInVisible.y
+        )
+        scrollView.contentView.scroll(to: newOrigin)
+        scrollView.reflectScrolledClipView(scrollView.contentView)
+    }
+
+    func zoomIn() { setZoom(zoomLevel * 1.25) }
+    func zoomOut() { setZoom(zoomLevel / 1.25) }
+    func zoomToFit() { setZoom(1.0) }
+
+    override func scrollWheel(with event: NSEvent) {
+        if event.modifierFlags.contains(.command) {
+            let mousePoint = convert(event.locationInWindow, from: nil)
+            let delta = event.scrollingDeltaY
+            if delta > 0 {
+                setZoom(zoomLevel * 1.1, centeredOn: mousePoint)
+            } else if delta < 0 {
+                setZoom(zoomLevel / 1.1, centeredOn: mousePoint)
+            }
+        } else {
+            super.scrollWheel(with: event)
+        }
+    }
+
     // MARK: - Keyboard Events
 
     override func keyDown(with event: NSEvent) {
@@ -216,11 +285,12 @@ class CanvasView: NSView, NSTextFieldDelegate {
         case "a": return .arrow
         case "l": return .line
         case "r": return .rectangle
+        case "u": return .roundedRect
         case "o": return .ellipse
         case "p": return .freehand
         case "t": return .text
         case "n": return .counter
-        case "h": return .highlighter
+        case "h": return .hand
         case "b": return .blur
         case "m": return .mosaic
         case "s": return .spotlight
@@ -317,6 +387,10 @@ class CanvasView: NSView, NSTextFieldDelegate {
             target.removeAnnotation(annotation)
             target.undoManager?.registerUndo(withTarget: target) { t2 in t2.addAnnotation(annotation) }
         }
+
+        // Auto-select the newly created annotation
+        selectionState.selectedAnnotation = annotation
+        needsDisplay = true
     }
 
     func registerMoveUndo(annotation: Annotation, previousRect: CGRect,
@@ -366,7 +440,7 @@ class CanvasView: NSView, NSTextFieldDelegate {
 
         for ann in annotations {
             if let blur = ann as? BlurAnnotation { blur.renderBlur(baseImage: baseImage, in: context) }
-            else if let mosaic = ann as? MosaicAnnotation { mosaic.renderMosaic(baseImage: baseImage, in: context) }
+            else if let mosaic = ann as? MosaicAnnotation { mosaic.renderMosaic(baseImage: baseImage, in: context, canvasSize: bounds.size) }
         }
         for ann in annotations where ann is SpotlightAnnotation { ann.render(in: context, canvasSize: size) }
         for ann in annotations {

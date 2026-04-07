@@ -26,7 +26,7 @@ class MosaicAnnotation: Annotation {
         context.stroke(rect)
     }
 
-    func renderMosaic(baseImage: NSImage, in context: CGContext) {
+    func renderMosaic(baseImage: NSImage, in context: CGContext, canvasSize: CGSize? = nil) {
         let rect = boundingRect
         guard rect.width > 0, rect.height > 0 else { return }
         guard let cgBase = baseImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return }
@@ -37,22 +37,30 @@ class MosaicAnnotation: Annotation {
         }
 
         let ciImage = CIImage(cgImage: cgBase)
-        let imageHeight = CGFloat(cgBase.height)
-        let scaleFactor = imageHeight / baseImage.size.height
+        let imgW = CGFloat(cgBase.width)
+        let imgH = CGFloat(cgBase.height)
 
+        // Canvas size might differ from baseImage.size due to zoom
+        let canvasW = canvasSize?.width ?? baseImage.size.width
+        let canvasH = canvasSize?.height ?? baseImage.size.height
+
+        let scaleX = imgW / canvasW
+        let scaleY = imgH / canvasH
+
+        // Convert canvas rect to image pixel rect
+        // NSView/CGContext origin is bottom-left, CIImage origin is also bottom-left
         let scaledRect = CGRect(
-            x: rect.origin.x * scaleFactor,
-            y: (baseImage.size.height - rect.origin.y - rect.height) * scaleFactor,
-            width: rect.width * scaleFactor,
-            height: rect.height * scaleFactor
+            x: rect.origin.x * scaleX,
+            y: rect.origin.y * scaleY,
+            width: rect.width * scaleX,
+            height: rect.height * scaleY
         )
 
         let cropped = ciImage.cropped(to: scaledRect)
 
-        // Pixelate using CIPixellate
         guard let pixelFilter = CIFilter(name: "CIPixellate") else { return }
         pixelFilter.setValue(cropped, forKey: kCIInputImageKey)
-        pixelFilter.setValue(pixelSize * scaleFactor, forKey: kCIInputScaleKey)
+        pixelFilter.setValue(pixelSize * max(scaleX, scaleY), forKey: kCIInputScaleKey)
         pixelFilter.setValue(CIVector(x: scaledRect.midX, y: scaledRect.midY), forKey: kCIInputCenterKey)
 
         guard let output = pixelFilter.outputImage else { return }

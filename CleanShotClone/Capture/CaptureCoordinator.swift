@@ -308,8 +308,8 @@ class CaptureCoordinator {
             }
         }
 
-        // For freeze mode, reuse the area selection overlay
-        let overlay = AreaSelectionOverlay(screens: NSScreen.screens) { [weak self] rect, screen in
+        // For freeze mode, pass frozen images to the overlay so screen appears "frozen"
+        let overlay = AreaSelectionOverlay(screens: NSScreen.screens, frozenImages: areaPreCaptures) { [weak self] rect, screen in
             self?.finishAreaSelection(rect: rect, screen: screen)
         } cancelHandler: { [weak self] in
             self?.cancelSelection()

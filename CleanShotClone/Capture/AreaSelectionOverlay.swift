@@ -4,13 +4,13 @@ class AreaSelectionOverlay: NSObject {
     private var windows: [NSWindow] = []
     private var selectionView: AreaSelectionView?
     private var screens: [NSScreen]
-    private let frozenImage: NSImage?
+    private let frozenImages: [String: NSImage]?
     private let completionHandler: (CGRect, NSScreen) -> Void
     private let cancelHandler: () -> Void
 
     init(screens: [NSScreen], frozenImages: [String: NSImage]? = nil, completionHandler: @escaping (CGRect, NSScreen) -> Void, cancelHandler: @escaping () -> Void) {
         self.screens = screens
-        self.frozenImage = nil
+        self.frozenImages = frozenImages
         self.completionHandler = completionHandler
         self.cancelHandler = cancelHandler
         super.init()
@@ -46,6 +46,9 @@ class AreaSelectionOverlay: NSObject {
             let view = AreaSelectionView(frame: NSRect(origin: .zero, size: screenFrame.size))
             view.screenBackingScale = screen.backingScaleFactor
             view.associatedScreen = screen
+            // Pass frozen image for this screen if available
+            let screenKey = "\(screen.displayID)"
+            view.frozenImage = frozenImages?[screenKey]
             view.completionHandler = { [weak self] rect in
                 guard let self = self else { return }
                 self.completionHandler(rect, screen)
